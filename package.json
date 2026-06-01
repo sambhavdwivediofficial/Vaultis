@@ -1,0 +1,36 @@
+{
+  "name": "vaultis",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Vaultis — Encrypted desktop vault",
+  "author": "Sambhav Dwivedi",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2",
+    "@tauri-apps/plugin-clipboard-manager": "^2",
+    "@tauri-apps/plugin-dialog": "^2",
+    "@tauri-apps/plugin-fs": "^2",
+    "@tauri-apps/plugin-notification": "^2",
+    "@tauri-apps/plugin-process": "^2",
+    "@tauri-apps/plugin-shell": "^2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.26.2",
+    "zustand": "^5.0.0",
+    "date-fns": "^3.6.0",
+    "clsx": "^2.1.1"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "@vitejs/plugin-react": "^4.3.1",
+    "vite": "^5.4.8"
+  }
+}
