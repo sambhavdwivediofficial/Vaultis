@@ -183,7 +183,7 @@ mod crypto_tests {
     fn test_recovery_key_format() {
         let key = RecoveryKey::generate().unwrap();
         let parts: Vec<&str> = key.display.split('-').collect();
-        assert_eq!(parts.len(), 5, "Recovery key should have 5 segments");
+        assert_eq!(parts.len(), 16, "Recovery key should have 16 segments");
         for part in &parts {
             assert_eq!(part.len(), 4, "Each segment should be 4 chars");
             assert!(part.chars().all(|c| c.is_ascii_hexdigit() || c.is_ascii_uppercase()));
@@ -209,7 +209,8 @@ mod crypto_tests {
     fn test_recovery_key_invalid_rejected() {
         assert!(RecoveryKey::from_str("INVALID").is_err());
         assert!(RecoveryKey::from_str("").is_err());
-        assert!(RecoveryKey::from_str("ZZZZ-ZZZZ-ZZZZ-ZZZZ-ZZZZ").is_err()); // not hex
+        // 16 segments of non-hex chars
+        assert!(RecoveryKey::from_str("ZZZZ-ZZZZ-ZZZZ-ZZZZ-ZZZZ-ZZZZ-ZZZZ-ZZZZ-ZZZZ-ZZZZ-ZZZZ-ZZZZ-ZZZZ-ZZZZ-ZZZZ-ZZZZ").is_err());
     }
 
     #[test]

@@ -47,7 +47,7 @@ mod vault_tests {
         let (_dir, path) = setup();
         let recovery = create_vault(&path, "TestPass1!", "My Vault").unwrap();
         let parts: Vec<&str> = recovery.display.split('-').collect();
-        assert_eq!(parts.len(), 5);
+        assert_eq!(parts.len(), 16);
         for part in &parts {
             assert_eq!(part.len(), 4);
         }
@@ -93,8 +93,7 @@ mod vault_tests {
     fn test_unlock_with_invalid_recovery_fails() {
         let (_dir, path) = setup();
         create_vault(&path, "MyPassword1!", "Vault").unwrap();
-        let result = unlock_with_recovery(&path, "XXXX-XXXX-XXXX-XXXX-XXXX");
-        // This will attempt decryption with a mismatched key → DecryptionFailed
+        let result = unlock_with_recovery(&path, "XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX-XXXX");
         assert!(result.is_err());
     }
 

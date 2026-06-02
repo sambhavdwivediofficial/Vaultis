@@ -7,7 +7,7 @@ mod database_tests {
         database::{
             connection::create_pool,
             migrations::{get_schema_version, run_migrations},
-            schema::CREATE_TABLES_SQL,
+            // schema::CREATE_TABLES_SQL,
         },
         utils::paths::get_database_path,
     };

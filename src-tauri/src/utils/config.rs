@@ -25,11 +25,10 @@ pub const AES_TAG_SIZE: usize = 16;
 /// Argon2id salt size in bytes
 pub const SALT_SIZE: usize = 32;
 
-/// Recovery key segment count
-pub const RECOVERY_SEGMENTS: usize = 5;
-
-/// Recovery key segment length (hex chars)
+/// Recovery key: 16 segments × 4 hex chars = 64 hex chars = 32 bytes
+pub const RECOVERY_SEGMENTS: usize = 16;
 pub const RECOVERY_SEGMENT_LEN: usize = 4;
+pub const RECOVERY_KEY_SIZE: usize = AES_KEY_SIZE; // 32 bytes
 
 /// Backup file extension
 pub const BACKUP_EXTENSION: &str = "vaultis";
