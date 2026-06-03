@@ -105,7 +105,6 @@ impl PasswordService {
             })
             .map_err(|_| VaultisError::NotFound(format!("Password {id}")))?;
 
-        // Update last_used_at
         let now = Utc::now().to_rfc3339();
         conn.execute(TOUCH_PASSWORD_USED, rusqlite::params![id, &now])?;
 
@@ -118,6 +117,39 @@ impl PasswordService {
     ) -> VaultisResult<Vec<PasswordPlaintext>> {
         let conn = pool.get()?;
         let mut stmt = conn.prepare(SELECT_ALL_PASSWORDS)?;
+        let entries = stmt
+            .query_map([], |row| {
+                Ok(PasswordEntry {
+                    id: row.get(0)?,
+                    name_enc: row.get(1)?,
+                    username_enc: row.get(2)?,
+                    password_enc: row.get(3)?,
+                    url_enc: row.get(4)?,
+                    notes_enc: row.get(5)?,
+                    totp_secret_enc: row.get(6)?,
+                    tags_enc: row.get(7)?,
+                    folder_id: row.get(8)?,
+                    created_at: parse_dt(&row.get::<_, String>(9)?),
+                    updated_at: parse_dt(&row.get::<_, String>(10)?),
+                    last_used_at: row.get::<_, Option<String>>(11)?.map(|s| parse_dt(&s)),
+                    is_trashed: row.get::<_, i32>(12)? != 0,
+                    trashed_at: row.get::<_, Option<String>>(13)?.map(|s| parse_dt(&s)),
+                    is_favorite: row.get::<_, i32>(14)? != 0,
+                    password_strength: row.get(15)?,
+                })
+            })?
+            .collect::<Result<Vec<_>, _>>()?;
+
+        entries.into_iter().map(|e| decrypt_password(key, e)).collect()
+    }
+
+    /// List all TRASHED password entries (decrypted).
+    pub fn list_trashed_passwords(
+        pool: &DbPool,
+        key: &[u8; 32],
+    ) -> VaultisResult<Vec<PasswordPlaintext>> {
+        let conn = pool.get()?;
+        let mut stmt = conn.prepare(SELECT_TRASHED_PASSWORDS)?;
         let entries = stmt
             .query_map([], |row| {
                 Ok(PasswordEntry {
@@ -235,21 +267,33 @@ impl PasswordService {
     }
 
     /// Generate a secure password using the given options.
+    /// Guarantees at least one character from each requested category.
     pub fn generate_password(opts: GeneratePasswordOptions) -> VaultisResult<String> {
+        use rand::seq::SliceRandom;
+
+        let mut required_chars: Vec<char> = Vec::new();
         let mut charset: Vec<u8> = Vec::new();
         let ambiguous = b"0O1lI";
 
         if opts.uppercase {
-            charset.extend_from_slice(b"ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+            let upper = b"ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            charset.extend_from_slice(upper);
+            required_chars.push(*upper.choose(&mut rand::thread_rng()).unwrap() as char);
         }
         if opts.lowercase {
-            charset.extend_from_slice(b"abcdefghijklmnopqrstuvwxyz");
+            let lower = b"abcdefghijklmnopqrstuvwxyz";
+            charset.extend_from_slice(lower);
+            required_chars.push(*lower.choose(&mut rand::thread_rng()).unwrap() as char);
         }
         if opts.digits {
-            charset.extend_from_slice(b"0123456789");
+            let digits = b"0123456789";
+            charset.extend_from_slice(digits);
+            required_chars.push(*digits.choose(&mut rand::thread_rng()).unwrap() as char);
         }
         if opts.symbols {
-            charset.extend_from_slice(b"!@#$%^&*()-_=+[]{}|;:,.<>?");
+            let symbols = b"!@#$%^&*()-_=+[]{}|;:,.<>?";
+            charset.extend_from_slice(symbols);
+            required_chars.push(*symbols.choose(&mut rand::thread_rng()).unwrap() as char);
         }
 
         if opts.exclude_ambiguous {
@@ -261,7 +305,24 @@ impl PasswordService {
         }
 
         let len = opts.length.clamp(8, 128);
-        secure_random_password(len, &charset)
+        let required_count = required_chars.len();
+
+        if len < required_count {
+            return Err(VaultisError::Internal(
+                format!("Password length {} too short for {} required categories", len, required_count)
+            ));
+        }
+
+        let remaining = len - required_count;
+        let mut password_chars: Vec<char> = secure_random_password(remaining, &charset)?
+            .bytes()
+            .map(|b| b as char)
+            .collect();
+
+        password_chars.extend(required_chars);
+        password_chars.shuffle(&mut rand::thread_rng());
+
+        Ok(password_chars.into_iter().collect())
     }
 }
 
@@ -296,7 +357,6 @@ fn decrypt_password(key: &[u8; 32], entry: PasswordEntry) -> VaultisResult<Passw
     })
 }
 
-/// Simple entropy-based password strength score 0-4.
 fn compute_strength(password: &str) -> Option<u8> {
     let len = password.len();
     let has_upper = password.chars().any(|c| c.is_uppercase());

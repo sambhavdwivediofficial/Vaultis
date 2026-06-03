@@ -60,6 +60,19 @@ pub fn list_files(state: State<AppState>) -> Result<Vec<FilePlaintext>, String> 
         .map_err(|e| e.to_string())
 }
 
+/// List all TRASHED files (for Trash page).
+#[tauri::command]
+pub fn list_trashed_files(state: State<AppState>) -> Result<Vec<FilePlaintext>, String> {
+    guard_unlocked(&state)?;
+    refresh_autolock(&state);
+
+    let pool = state.pool().map_err(|e| e.to_string())?;
+    state
+        .key_manager
+        .with_key(|key| FileService::list_trashed_files(pool, key))
+        .map_err(|e| e.to_string())
+}
+
 /// Soft-delete a file (moves to trash).
 #[tauri::command]
 pub fn delete_file(state: State<AppState>, id: String) -> Result<(), String> {

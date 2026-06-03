@@ -129,6 +129,39 @@ impl NoteService {
         notes.into_iter().map(|n| decrypt_note(key, n)).collect()
     }
 
+    /// List all TRASHED notes (decrypted).
+    pub fn list_trashed_notes(pool: &DbPool, key: &[u8; 32]) -> VaultisResult<Vec<NotePlaintext>> {
+        let conn = pool.get()?;
+        let mut stmt = conn.prepare(SELECT_TRASHED_NOTES)?;
+        let notes = stmt
+            .query_map([], |row| {
+                Ok(Note {
+                    id: row.get(0)?,
+                    title_enc: row.get(1)?,
+                    content_enc: row.get(2)?,
+                    tags_enc: row.get(3)?,
+                    folder_id: row.get(4)?,
+                    created_at: chrono::DateTime::parse_from_rfc3339(&row.get::<_, String>(5)?)
+                        .unwrap_or_default()
+                        .with_timezone(&Utc),
+                    updated_at: chrono::DateTime::parse_from_rfc3339(&row.get::<_, String>(6)?)
+                        .unwrap_or_default()
+                        .with_timezone(&Utc),
+                    is_trashed: row.get::<_, i32>(7)? != 0,
+                    trashed_at: row.get::<_, Option<String>>(8)?.and_then(|s| {
+                        chrono::DateTime::parse_from_rfc3339(&s)
+                            .ok()
+                            .map(|dt| dt.with_timezone(&Utc))
+                    }),
+                    color_enc: row.get(9)?,
+                    is_pinned: row.get::<_, i32>(10)? != 0,
+                })
+            })?
+            .collect::<Result<Vec<_>, _>>()?;
+
+        notes.into_iter().map(|n| decrypt_note(key, n)).collect()
+    }
+
     /// Update an existing note.
     pub fn update_note(
         pool: &DbPool,

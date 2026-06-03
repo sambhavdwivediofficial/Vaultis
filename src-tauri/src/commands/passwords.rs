@@ -76,6 +76,19 @@ pub fn list_passwords(state: State<AppState>) -> Result<Vec<PasswordPlaintext>, 
         .map_err(|e| e.to_string())
 }
 
+/// List all TRASHED password entries (for Trash page).
+#[tauri::command]
+pub fn list_trashed_passwords(state: State<AppState>) -> Result<Vec<PasswordPlaintext>, String> {
+    guard_unlocked(&state)?;
+    refresh_autolock(&state);
+
+    let pool = state.pool().map_err(|e| e.to_string())?;
+    state
+        .key_manager
+        .with_key(|key| PasswordService::list_trashed_passwords(pool, key))
+        .map_err(|e| e.to_string())
+}
+
 /// Update an existing password entry.
 #[tauri::command]
 pub fn update_password(

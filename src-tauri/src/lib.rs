@@ -22,7 +22,7 @@ pub fn run() {
     // Initialize logging first
     utils::logger::init_logger();
 
-    info!("Vaultis starting — built by Sambhav Dwivedi");
+    info!("Vaultis — built by Sambhav Dwivedi");
 
     tauri::Builder::default()
         // ── Plugins ────────────────────────────────────────────────────────
@@ -106,6 +106,7 @@ pub fn run() {
             create_note,
             get_note,
             list_notes,
+            list_trashed_notes,
             update_note,
             delete_note,
             restore_note,
@@ -114,6 +115,7 @@ pub fn run() {
             upload_file,
             get_file_metadata,
             list_files,
+            list_trashed_files,
             delete_file,
             restore_file,
             export_file,
@@ -122,6 +124,7 @@ pub fn run() {
             create_password,
             get_password,
             list_passwords,
+            list_trashed_passwords,
             update_password,
             delete_password,
             restore_password,

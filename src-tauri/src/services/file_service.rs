@@ -107,6 +107,16 @@ impl FileService {
         entries.into_iter().map(|e| decrypt_file_meta(key, e)).collect()
     }
 
+    /// List all TRASHED files (decrypted metadata).
+    pub fn list_trashed_files(pool: &DbPool, key: &[u8; 32]) -> VaultisResult<Vec<FilePlaintext>> {
+        let conn = pool.get()?;
+        let mut stmt = conn.prepare(SELECT_TRASHED_FILES)?;
+        let entries = stmt
+            .query_map([], map_file_row)?
+            .collect::<Result<Vec<_>, _>>()?;
+        entries.into_iter().map(|e| decrypt_file_meta(key, e)).collect()
+    }
+
     pub fn delete_file(pool: &DbPool, id: &str) -> VaultisResult<()> {
         let conn = pool.get()?;
         let now = Utc::now().to_rfc3339();

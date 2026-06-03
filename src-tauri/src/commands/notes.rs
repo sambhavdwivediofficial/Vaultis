@@ -58,6 +58,19 @@ pub fn list_notes(state: State<AppState>) -> Result<Vec<NotePlaintext>, String> 
         .map_err(|e| e.to_string())
 }
 
+/// List all TRASHED notes (for Trash page).
+#[tauri::command]
+pub fn list_trashed_notes(state: State<AppState>) -> Result<Vec<NotePlaintext>, String> {
+    guard_unlocked(&state)?;
+    refresh_autolock(&state);
+
+    let pool = state.pool().map_err(|e| e.to_string())?;
+    state
+        .key_manager
+        .with_key(|key| NoteService::list_trashed_notes(pool, key))
+        .map_err(|e| e.to_string())
+}
+
 /// Update an existing note.
 #[tauri::command]
 pub fn update_note(

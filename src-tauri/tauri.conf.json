@@ -14,16 +14,17 @@
     "windows": [
       {
         "title": "Vaultis",
-        "width": 1280,
+        "width": 1300,
         "height": 800,
-        "minWidth": 960,
-        "minHeight": 600,
+        "minWidth": 950,
+        "minHeight": 650,
+        "x": 120,
+        "y": 5,
         "resizable": true,
         "fullscreen": false,
-        "center": true,
+        "center": false,
         "decorations": true,
         "transparent": false,
-        "alwaysOnTop": false,
         "skipTaskbar": false,
         "visible": true,
         "focus": true,
@@ -59,34 +60,8 @@
     "shell": {
       "open": false
     },
-    "fs": {
-      "all": false,
-      "readFile": true,
-      "writeFile": true,
-      "readDir": true,
-      "copyFile": true,
-      "createDir": true,
-      "removeDir": true,
-      "removeFile": true,
-      "renameFile": true,
-      "exists": true,
-      "scope": {
-        "allow": [
-          { "path": "$APPDATA/**" },
-          { "path": "$DOCUMENT/**" },
-          { "path": "$DESKTOP/**" },
-          { "path": "$DOWNLOAD/**" }
-        ]
-      }
-    },
-    "dialog": {
-      "all": true
-    },
     "process": {
       "all": false
-    },
-    "autostart": {
-      "desktopFilename": "Vaultis"
     }
   }
 }
