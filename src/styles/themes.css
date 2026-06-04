@@ -1,0 +1,334 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   VAULTIS — THEME DEFINITIONS
+   All color themes are defined here as CSS custom property overrides.
+   The default theme is dark. Light theme overrides go under [data-theme="light"].
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ── DARK THEME (Default) ──────────────────────────────────────────── */
+:root,
+[data-theme="dark"] {
+
+  /* Background layers */
+  --color-bg-base:     #08080e;
+  --color-bg-surface:  #0e0e18;
+  --color-bg-elevated: #141420;
+  --color-bg-overlay:  #1a1a28;
+  --color-bg-subtle:   #1c1c2e;
+
+  /* Glass surface system */
+  --glass-bg:          rgba(255, 255, 255, 0.028);
+  --glass-bg-hover:    rgba(255, 255, 255, 0.045);
+  --glass-bg-active:   rgba(255, 255, 255, 0.065);
+  --glass-bg-strong:   rgba(255, 255, 255, 0.09);
+  --glass-border:      rgba(255, 255, 255, 0.07);
+  --glass-border-strong: rgba(255, 255, 255, 0.12);
+
+  /* Text scale */
+  --text-primary:      rgba(255, 255, 255, 0.92);
+  --text-secondary:    rgba(255, 255, 255, 0.62);
+  --text-tertiary:     rgba(255, 255, 255, 0.38);
+  --text-disabled:     rgba(255, 255, 255, 0.22);
+  --text-accent:       #00d4a0;
+  --text-inverse:      #08080e;
+
+  /* Border scale */
+  --border-subtle:     rgba(255, 255, 255, 0.06);
+  --border-default:    rgba(255, 255, 255, 0.09);
+  --border-strong:     rgba(255, 255, 255, 0.14);
+  --border-accent:     rgba(0, 212, 160, 0.3);
+
+  /* Primary accent — Emerald */
+  --accent-primary:         #00d4a0;
+  --accent-primary-hover:   #00e8af;
+  --accent-primary-active:  #00bb8c;
+  --accent-primary-dim:     rgba(0, 212, 160, 0.12);
+  --accent-primary-glow:    rgba(0, 212, 160, 0.35);
+
+  /* Secondary accent — Blue */
+  --accent-secondary:       #0095ff;
+  --accent-secondary-hover: #1aa3ff;
+  --accent-secondary-active:#0080e0;
+  --accent-secondary-dim:   rgba(0, 149, 255, 0.12);
+  --accent-secondary-glow:  rgba(0, 149, 255, 0.30);
+
+  /* Danger — Rose */
+  --accent-danger:          #ff4466;
+  --accent-danger-hover:    #ff5577;
+  --accent-danger-active:   #e03355;
+  --accent-danger-dim:      rgba(255, 68, 102, 0.12);
+  --accent-danger-glow:     rgba(255, 68, 102, 0.30);
+
+  /* Warning — Amber */
+  --accent-warning:         #ffaa00;
+  --accent-warning-hover:   #ffbb22;
+  --accent-warning-active:  #e09500;
+  --accent-warning-dim:     rgba(255, 170, 0, 0.12);
+
+  /* Success — Green */
+  --accent-success:         #22c55e;
+  --accent-success-hover:   #34d472;
+  --accent-success-active:  #1aac50;
+  --accent-success-dim:     rgba(34, 197, 94, 0.12);
+
+  /* Purple — for tags and decorations */
+  --accent-purple:          #8b5cf6;
+  --accent-purple-dim:      rgba(139, 92, 246, 0.12);
+
+  /* Overlay backdrop */
+  --overlay-bg: rgba(0, 0, 0, 0.7);
+  --overlay-bg-strong: rgba(0, 0, 0, 0.85);
+
+  /* Shadow tokens */
+  --shadow-xs:  0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-sm:  0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md:  0 4px 16px rgba(0, 0, 0, 0.45);
+  --shadow-lg:  0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-xl:  0 16px 56px rgba(0, 0, 0, 0.55);
+  --shadow-accent: 0 0 20px rgba(0, 212, 160, 0.25), 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-danger: 0 0 20px rgba(255, 68, 102, 0.25), 0 4px 12px rgba(0, 0, 0, 0.4);
+
+  /* Scrollbar */
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: rgba(255, 255, 255, 0.1);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.18);
+
+  /* Code block */
+  --code-bg:     rgba(255, 255, 255, 0.06);
+  --code-border: rgba(255, 255, 255, 0.10);
+  --code-text:   #00d4a0;
+
+  /* Input */
+  --input-bg:       rgba(255, 255, 255, 0.04);
+  --input-bg-focus: rgba(255, 255, 255, 0.06);
+  --input-border:   rgba(255, 255, 255, 0.10);
+  --input-border-focus: #00d4a0;
+  --input-placeholder: rgba(255, 255, 255, 0.28);
+
+  /* Sidebar specific */
+  --sidebar-bg:      rgba(8, 8, 14, 0.96);
+  --sidebar-border:  rgba(255, 255, 255, 0.06);
+  --sidebar-item-hover: rgba(255, 255, 255, 0.05);
+  --sidebar-item-active: rgba(0, 212, 160, 0.10);
+  --sidebar-item-active-border: #00d4a0;
+
+  /* Card */
+  --card-bg:     rgba(255, 255, 255, 0.028);
+  --card-border: rgba(255, 255, 255, 0.07);
+  --card-hover:  rgba(255, 255, 255, 0.045);
+
+  /* Toast */
+  --toast-bg:     rgba(22, 22, 34, 0.98);
+  --toast-border: rgba(255, 255, 255, 0.08);
+
+  /* Selection */
+  --selection-bg:   rgba(0, 212, 160, 0.25);
+  --selection-text: #ffffff;
+}
+
+/* ── LIGHT THEME ───────────────────────────────────────────────────── */
+[data-theme="light"] {
+
+  /* Background layers */
+  --color-bg-base:     #f2f2f8;
+  --color-bg-surface:  #e8e8f4;
+  --color-bg-elevated: #dcdcee;
+  --color-bg-overlay:  #d0d0e4;
+  --color-bg-subtle:   #c8c8de;
+
+  /* Glass surface system */
+  --glass-bg:          rgba(0, 0, 0, 0.025);
+  --glass-bg-hover:    rgba(0, 0, 0, 0.045);
+  --glass-bg-active:   rgba(0, 0, 0, 0.065);
+  --glass-bg-strong:   rgba(0, 0, 0, 0.085);
+  --glass-border:      rgba(0, 0, 0, 0.07);
+  --glass-border-strong: rgba(0, 0, 0, 0.12);
+
+  /* Text scale */
+  --text-primary:   rgba(10, 10, 22, 0.92);
+  --text-secondary: rgba(10, 10, 22, 0.62);
+  --text-tertiary:  rgba(10, 10, 22, 0.40);
+  --text-disabled:  rgba(10, 10, 22, 0.24);
+  --text-accent:    #007f60;
+  --text-inverse:   #ffffff;
+
+  /* Border scale */
+  --border-subtle:  rgba(0, 0, 0, 0.07);
+  --border-default: rgba(0, 0, 0, 0.11);
+  --border-strong:  rgba(0, 0, 0, 0.17);
+  --border-accent:  rgba(0, 180, 130, 0.35);
+
+  /* Primary accent — Emerald (slightly darker for light bg) */
+  --accent-primary:        #00a87e;
+  --accent-primary-hover:  #00bf90;
+  --accent-primary-active: #008f6a;
+  --accent-primary-dim:    rgba(0, 168, 126, 0.10);
+  --accent-primary-glow:   rgba(0, 168, 126, 0.25);
+
+  /* Secondary accent — Blue */
+  --accent-secondary:       #0070cc;
+  --accent-secondary-hover: #0080e8;
+  --accent-secondary-active:#0060bb;
+  --accent-secondary-dim:   rgba(0, 112, 204, 0.10);
+  --accent-secondary-glow:  rgba(0, 112, 204, 0.22);
+
+  /* Danger */
+  --accent-danger:        #d42255;
+  --accent-danger-hover:  #e83366;
+  --accent-danger-active: #bb1144;
+  --accent-danger-dim:    rgba(212, 34, 85, 0.10);
+  --accent-danger-glow:   rgba(212, 34, 85, 0.22);
+
+  /* Warning */
+  --accent-warning:       #c47800;
+  --accent-warning-hover: #d98800;
+  --accent-warning-active:#a96600;
+  --accent-warning-dim:   rgba(196, 120, 0, 0.10);
+
+  /* Success */
+  --accent-success:       #16a34a;
+  --accent-success-hover: #22c55e;
+  --accent-success-active:#15803d;
+  --accent-success-dim:   rgba(22, 163, 74, 0.10);
+
+  /* Purple */
+  --accent-purple:     #7c3aed;
+  --accent-purple-dim: rgba(124, 58, 237, 0.10);
+
+  /* Overlay backdrop */
+  --overlay-bg:        rgba(0, 0, 0, 0.45);
+  --overlay-bg-strong: rgba(0, 0, 0, 0.65);
+
+  /* Shadow tokens */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.10);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.10);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.14);
+  --shadow-xl: 0 16px 56px rgba(0, 0, 0, 0.16);
+  --shadow-accent: 0 0 20px rgba(0, 168, 126, 0.20), 0 4px 12px rgba(0, 0, 0, 0.10);
+  --shadow-danger: 0 0 20px rgba(212, 34, 85, 0.20), 0 4px 12px rgba(0, 0, 0, 0.10);
+
+  /* Scrollbar */
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: rgba(0, 0, 0, 0.12);
+  --scrollbar-thumb-hover: rgba(0, 0, 0, 0.22);
+
+  /* Code block */
+  --code-bg:     rgba(0, 0, 0, 0.05);
+  --code-border: rgba(0, 0, 0, 0.09);
+  --code-text:   #007f60;
+
+  /* Input */
+  --input-bg:           rgba(0, 0, 0, 0.025);
+  --input-bg-focus:     rgba(0, 0, 0, 0.04);
+  --input-border:       rgba(0, 0, 0, 0.12);
+  --input-border-focus: #00a87e;
+  --input-placeholder:  rgba(10, 10, 22, 0.32);
+
+  /* Sidebar specific */
+  --sidebar-bg:      rgba(232, 232, 244, 0.98);
+  --sidebar-border:  rgba(0, 0, 0, 0.07);
+  --sidebar-item-hover:   rgba(0, 0, 0, 0.05);
+  --sidebar-item-active:  rgba(0, 168, 126, 0.10);
+  --sidebar-item-active-border: #00a87e;
+
+  /* Card */
+  --card-bg:     rgba(0, 0, 0, 0.025);
+  --card-border: rgba(0, 0, 0, 0.07);
+  --card-hover:  rgba(0, 0, 0, 0.045);
+
+  /* Toast */
+  --toast-bg:     rgba(230, 230, 246, 0.98);
+  --toast-border: rgba(0, 0, 0, 0.09);
+
+  /* Selection */
+  --selection-bg:   rgba(0, 168, 126, 0.22);
+  --selection-text: #0a0a16;
+}
+
+/* ── SYSTEM PREFERENCE AUTO THEME ──────────────────────────────────── */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]):not([data-theme="light"]) {
+
+    --color-bg-base:     #f2f2f8;
+    --color-bg-surface:  #e8e8f4;
+    --color-bg-elevated: #dcdcee;
+    --color-bg-overlay:  #d0d0e4;
+    --color-bg-subtle:   #c8c8de;
+
+    --glass-bg:          rgba(0, 0, 0, 0.025);
+    --glass-bg-hover:    rgba(0, 0, 0, 0.045);
+    --glass-bg-active:   rgba(0, 0, 0, 0.065);
+    --glass-bg-strong:   rgba(0, 0, 0, 0.085);
+    --glass-border:      rgba(0, 0, 0, 0.07);
+
+    --text-primary:   rgba(10, 10, 22, 0.92);
+    --text-secondary: rgba(10, 10, 22, 0.62);
+    --text-tertiary:  rgba(10, 10, 22, 0.40);
+    --text-disabled:  rgba(10, 10, 22, 0.24);
+    --text-accent:    #007f60;
+
+    --border-subtle:  rgba(0, 0, 0, 0.07);
+    --border-default: rgba(0, 0, 0, 0.11);
+    --border-strong:  rgba(0, 0, 0, 0.17);
+
+    --accent-primary:     #00a87e;
+    --accent-primary-dim: rgba(0, 168, 126, 0.10);
+
+    --accent-danger:     #d42255;
+    --accent-danger-dim: rgba(212, 34, 85, 0.10);
+
+    --accent-warning:     #c47800;
+    --accent-warning-dim: rgba(196, 120, 0, 0.10);
+
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.10);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.14);
+
+    --overlay-bg: rgba(0, 0, 0, 0.45);
+
+    --input-bg:           rgba(0, 0, 0, 0.025);
+    --input-border:       rgba(0, 0, 0, 0.12);
+    --input-border-focus: #00a87e;
+
+    --sidebar-bg:     rgba(232, 232, 244, 0.98);
+    --sidebar-border: rgba(0, 0, 0, 0.07);
+
+    --card-bg:     rgba(0, 0, 0, 0.025);
+    --card-border: rgba(0, 0, 0, 0.07);
+    --card-hover:  rgba(0, 0, 0, 0.045);
+
+    --scrollbar-thumb: rgba(0, 0, 0, 0.12);
+    --scrollbar-thumb-hover: rgba(0, 0, 0, 0.22);
+  }
+}
+
+/* ── THEME TRANSITION ───────────────────────────────────────────────── */
+/* Smooth color transition when switching themes */
+*,
+*::before,
+*::after {
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+/* Exclude elements where transition is undesirable */
+[data-no-theme-transition],
+[data-no-theme-transition] * {
+  transition: none !important;
+}
+
+/* ── UTILITY CLASSES ────────────────────────────────────────────────── */
+.theme-bg-base     { background: var(--color-bg-base); }
+.theme-bg-surface  { background: var(--color-bg-surface); }
+.theme-bg-elevated { background: var(--color-bg-elevated); }
+
+.theme-text-primary   { color: var(--text-primary); }
+.theme-text-secondary { color: var(--text-secondary); }
+.theme-text-tertiary  { color: var(--text-tertiary); }
+.theme-text-accent    { color: var(--accent-primary); }
+
+.theme-border       { border-color: var(--border-default); }
+.theme-border-subtle { border-color: var(--border-subtle); }
