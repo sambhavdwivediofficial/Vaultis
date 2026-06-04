@@ -90,58 +90,58 @@ The security model of Vaultis is built around several non-negotiable principles 
 </div>
 
 ```
-                                 Your Password
-                                      │
-                                      ▼
-                    ┌─────────────────────────────────┐
-                    │       Argon2id  Key Derivation  │   High memory cost · Time cost
-                    │       Salt: unique per vault    │   Resistant to GPU brute force
-                    └──────────────────┬──────────────┘
-                                       │
-                                       ▼
-                                Master Key (256-bit)
-                                       │
-                         ┌─────────────┼──────────────┐
-                         ▼             ▼              ▼
-                    ┌─────────┐   ┌──────────┐  ┌──────────┐
-                    │  Notes  │   │Passwords │  │  Files   │
-                    │AES-256- │   │AES-256-  │  │AES-256-  │
-                    │  GCM    │   │  GCM     │  │  GCM     │
-                    └────┬────┘   └────┬─────┘  └────┬─────┘
-                         └─────────────┴─────────────┘
-                                       │
-                                       ▼
-                           SQLite (Encrypted at rest)
-                           Single local .db file
-                           Zero readable data without key
+                                               Your Password
+                                                    │
+                                                    ▼
+                                  ┌─────────────────────────────────┐
+                                  │       Argon2id  Key Derivation  │   High memory cost · Time cost
+                                  │       Salt: unique per vault    │   Resistant to GPU brute force
+                                  └──────────────────┬──────────────┘
+                                                     │
+                                                     ▼
+                                              Master Key (256-bit)
+                                                     │
+                                       ┌─────────────┼──────────────┐
+                                       ▼             ▼              ▼
+                                  ┌─────────┐   ┌──────────┐  ┌──────────┐
+                                  │  Notes  │   │Passwords │  │  Files   │
+                                  │AES-256- │   │AES-256-  │  │AES-256-  │
+                                  │  GCM    │   │  GCM     │  │  GCM     │
+                                  └────┬────┘   └────┬─────┘  └────┬─────┘
+                                       └─────────────┴─────────────┘
+                                                     │
+                                                     ▼
+                                         SQLite (Encrypted at rest)
+                                         Single local .db file
+                                         Zero readable data without key
 ```
 
 ```
-                                      Unlock Flow
-                   ──────────────────────────────────────────────────────────
-
-                    App Start ──► Vault Exists? ──No──► Welcome / Setup
-                                      │
-                                     Yes
-                                      │
-                                      ▼
-                                Enter Password
-                                      │
-                                      ▼
-                             Argon2id Derivation
-                                      │
-                                      ▼
-                            AES-256-GCM Verify ──Fail──►  Attempt Counter
-                                      │                   (Max 5, then lock)
-                                     Pass
-                                      │
-                                      ▼
-                             Key held in memory
-                               Vault unlocked
-                                      │
-                                      ▼
-                             Auto-lock timer starts
-                           Ctrl+Shift+L = instant lock
+                                                    Unlock Flow
+                                 ──────────────────────────────────────────────────────────
+              
+                                  App Start ──► Vault Exists? ──No──► Welcome / Setup
+                                                    │
+                                                   Yes
+                                                    │
+                                                    ▼
+                                              Enter Password
+                                                    │
+                                                    ▼
+                                           Argon2id Derivation
+                                                    │
+                                                    ▼
+                                          AES-256-GCM Verify ──Fail──►  Attempt Counter
+                                                    │                   (Max 5, then lock)
+                                                   Pass
+                                                    │
+                                                    ▼
+                                           Key held in memory
+                                             Vault unlocked
+                                                    │
+                                                    ▼
+                                           Auto-lock timer starts
+                                         Ctrl+Shift+L = instant lock
 ```
 
 ---
