@@ -90,35 +90,35 @@ The security model of Vaultis is built around several non-negotiable principles 
 </div>
 
 ```
-                                               Your Password
-                                                    │
-                                                    ▼
-                                  ┌─────────────────────────────────┐
-                                  │       Argon2id  Key Derivation  │   High memory cost · Time cost
-                                  │       Salt: unique per vault    │   Resistant to GPU brute force
-                                  └──────────────────┬──────────────┘
-                                                     │
-                                                     ▼
-                                              Master Key (256-bit)
-                                                     │
-                                       ┌─────────────┼──────────────┐
-                                       ▼             ▼              ▼
-                                  ┌─────────┐   ┌──────────┐  ┌──────────┐
-                                  │  Notes  │   │Passwords │  │  Files   │
-                                  │AES-256- │   │AES-256-  │  │AES-256-  │
-                                  │  GCM    │   │  GCM     │  │  GCM     │
-                                  └────┬────┘   └────┬─────┘  └────┬─────┘
-                                       └─────────────┴─────────────┘
-                                                     │
-                                                     ▼
-                                         SQLite (Encrypted at rest)
-                                         Single local .db file
-                                         Zero readable data without key
+                                         Your Password
+                                              │
+                                              ▼
+                            ┌─────────────────────────────────┐
+                            │       Argon2id  Key Derivation  │   High memory cost · Time cost
+                            │       Salt: unique per vault    │   Resistant to GPU brute force
+                            └──────────────────┬──────────────┘
+                                               │
+                                               ▼
+                                        Master Key (256-bit)
+                                               │
+                                 ┌─────────────┼──────────────┐
+                                 ▼             ▼              ▼
+                            ┌─────────┐   ┌──────────┐  ┌──────────┐
+                            │  Notes  │   │Passwords │  │  Files   │
+                            │AES-256- │   │AES-256-  │  │AES-256-  │
+                            │  GCM    │   │  GCM     │  │  GCM     │
+                            └────┬────┘   └────┬─────┘  └────┬─────┘
+                                 └─────────────┴─────────────┘
+                                               │
+                                               ▼
+                                   SQLite (Encrypted at rest)
+                                   Single local .db file
+                                   Zero readable data without key
 ```
 
 ```
                                                     Unlock Flow
-                                 ──────────────────────────────────────────────────────────
+                              ──────────────────────────────────────────────────────────
               
                                   App Start ──► Vault Exists? ──No──► Welcome / Setup
                                                     │
