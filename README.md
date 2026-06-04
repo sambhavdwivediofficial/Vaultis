@@ -9,5 +9,5 @@
   Developed by <strong>Sambhav Dwivedi</strong>
 </p>
 <p align="center">
-  *Built & Maintained by* <strong>**Sambhav Dwivedi**</strong>
+  Built & Maintained by <strong>Sambhav Dwivedi</strong>
 </p>
