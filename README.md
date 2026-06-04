@@ -87,8 +87,6 @@ The security model of Vaultis is built around several non-negotiable principles 
 
 ## How It Works
 
-</div>
-
 ```
   Your Password
        │
@@ -143,7 +141,7 @@ The security model of Vaultis is built around several non-negotiable principles 
            Auto-lock timer starts
          Ctrl+Shift+L = instant lock
 ```
-
+</div>
 ---
 
 <div align="center">
