@@ -1,6 +1,7 @@
 <div align="center">
 
 <img src="./src/assets/images/logo.png" >
+
 <br />
 <p><strong>A privacy-first, zero-knowledge, fully encrypted local vault for passwords, notes, and files.</strong><br />Built for people who refuse to trust the cloud with what matters most.</p>
 
