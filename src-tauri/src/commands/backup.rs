@@ -1,3 +1,4 @@
+// backup.rs
 use std::path::PathBuf;
 use serde::{Deserialize, Serialize};
 use tauri::State;
@@ -12,7 +13,21 @@ use crate::{
     state::app_state::AppState,
 };
 
-/// Info returned for each backup file in the list.
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct CreateBackupOptions {
+    pub include_metadata: Option<bool>,
+    pub encryption_method: Option<String>,
+    pub compression_level: Option<u32>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RestoreBackupOptions {
+    pub password: Option<String>,
+    pub include_metadata: Option<bool>,
+}
+
 #[derive(Debug, Serialize, Deserialize)]
 pub struct BackupEntry {
     pub path: String,
@@ -21,33 +36,49 @@ pub struct BackupEntry {
     pub modified_at: Option<String>,
 }
 
-/// Create an encrypted backup of the vault to the default backups directory.
-/// Returns the path of the created backup file.
 #[tauri::command]
-pub fn create_backup(state: State<AppState>) -> Result<String, String> {
+pub fn create_backup(
+    state: State<AppState>,
+    options: CreateBackupOptions,
+) -> Result<String, String> {
     guard_unlocked(&state)?;
 
     let data_dir = state.data_dir.read().clone();
-    let backup_path = BackupService::create_backup(&data_dir).map_err(|e| e.to_string())?;
+    let compression = options.compression_level;
+    
+    tracing::info!(
+        "Creating backup with: compression={:?}, metadata={:?}, encryption={:?}",
+        options.compression_level,
+        options.include_metadata,
+        options.encryption_method
+    );
+
+    let backup_path = BackupService::create_backup(&data_dir, compression).map_err(|e| e.to_string())?;
 
     tracing::info!("Backup created: {}", backup_path.display());
     Ok(backup_path.to_string_lossy().into_owned())
 }
 
-/// Restore vault state from a `.vaultis` backup file.
-/// Vault must be locked before restoring (to prevent key conflicts).
 #[tauri::command]
-pub fn restore_backup(state: State<AppState>, backup_path: String) -> Result<BackupManifest, String> {
-    // Force lock before restore to avoid key/state conflicts
+pub fn restore_backup(
+    state: State<AppState>,
+    backup_path: String,
+    options: RestoreBackupOptions,
+) -> Result<BackupManifest, String> {
     state.emergency_lock();
 
     let data_dir = state.data_dir.read().clone();
     let path = PathBuf::from(&backup_path);
 
+    tracing::info!(
+        "Restoring backup: {}, metadata={:?}",
+        backup_path,
+        options.include_metadata
+    );
+
     importer_restore_backup(&data_dir, &path).map_err(|e| e.to_string())
 }
 
-/// List all backup files in the backups directory.
 #[tauri::command]
 pub fn list_backups(state: State<AppState>) -> Result<Vec<BackupEntry>, String> {
     let data_dir = state.data_dir.read().clone();
@@ -76,15 +107,12 @@ pub fn list_backups(state: State<AppState>) -> Result<Vec<BackupEntry>, String> 
     Ok(entries)
 }
 
-/// Delete a specific backup file.
 #[tauri::command]
 pub fn delete_backup(backup_path: String) -> Result<(), String> {
     let path = PathBuf::from(&backup_path);
     BackupService::delete_backup(&path).map_err(|e| e.to_string())
 }
 
-/// Export the complete vault to a user-chosen directory.
-/// Requires vault to be unlocked (to count notes/passwords for manifest).
 #[tauri::command]
 pub fn export_vault(
     state: State<AppState>,
@@ -95,7 +123,6 @@ pub fn export_vault(
     let data_dir = state.data_dir.read().clone();
     let pool = state.pool().map_err(|e| e.to_string())?;
 
-    // Collect counts for manifest
     let (note_count, password_count, vault_id) = state
         .key_manager
         .with_key(|key| {

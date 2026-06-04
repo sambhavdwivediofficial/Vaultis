@@ -1,0 +1,112 @@
+.wrapper { display: flex; width: 100dvw; height: 100dvh; overflow: hidden; }
+.main { flex: 1; display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  animation: fade-up var(--duration-slow) var(--ease-out) both;
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: var(--space-4);
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+
+.settingRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.settingRow:last-child { border-bottom: none; }
+
+.settingLabel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1;
+}
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.hint {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.selectSmall {
+  width: 160px;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  width: 44px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: var(--glass-bg-active);
+  border: 1px solid var(--border-default);
+  cursor: pointer;
+  transition: all var(--duration-fast);
+  padding: 2px;
+  flex-shrink: 0;
+}
+.toggle:hover { background: var(--glass-bg-hover); }
+.toggle.toggleActive {
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+}
+
+.toggleSwitch {
+  display: block;
+  width: 18px;
+  height: 18px;
+  border-radius: var(--radius-full);
+  background: white;
+  transition: transform var(--duration-fast);
+  box-shadow: var(--shadow-sm);
+}
+.toggleActive .toggleSwitch {
+  transform: translateX(20px);
+}
+
+.dangerCard {
+  border-color: var(--accent-danger-dim);
+}
+
+.dialogForm {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-bottom: var(--space-4);
+}
+
+@media (max-width: 768px) {
+  .container { gap: var(--space-3); }
+  .settingRow { flex-direction: column; align-items: flex-start; }
+  .selectSmall { width: 100%; }
+}

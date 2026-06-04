@@ -1,0 +1,82 @@
+.body { display: flex; flex-direction: column; gap: var(--space-5); }
+
+.warning {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--accent-warning-dim);
+  border: 1px solid rgba(255,170,0,0.2);
+  font-size: var(--text-sm);
+  color: var(--accent-warning);
+  line-height: 1.5;
+}
+
+.keyWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-5);
+  background: var(--color-bg-base);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+}
+
+.key {
+  font-family: var(--font-mono);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--accent-primary);
+  letter-spacing: 0.12em;
+  text-align: center;
+  word-break: break-all;
+}
+
+.copyBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-default);
+  background: var(--glass-bg);
+  transition: color var(--duration-fast), background var(--duration-fast);
+}
+.copyBtn:hover { color: var(--text-primary); background: var(--glass-bg-active); }
+
+.tips { display: flex; flex-direction: column; gap: var(--space-2); }
+.tip  {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+}
+.tipDot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  flex-shrink: 0;
+}
+
+.confirm {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--glass-bg);
+  user-select: none;
+}
+.checkbox { accent-color: var(--accent-primary); width: 15px; height: 15px; cursor: pointer; flex-shrink: 0; }

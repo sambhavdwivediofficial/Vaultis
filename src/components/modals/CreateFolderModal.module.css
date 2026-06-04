@@ -1,0 +1,14 @@
+.body { display: flex; flex-direction: column; gap: var(--space-5); }
+.colorLabel { font-size: var(--text-sm); font-weight: 500; color: var(--text-secondary); }
+.colorPick  { display: flex; flex-direction: column; gap: var(--space-2); }
+.swatches   { display: flex; align-items: center; gap: var(--space-2); }
+.swatch {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  outline-offset: 3px;
+  transition: transform var(--duration-fast), outline-offset var(--duration-fast);
+}
+.swatch:hover { transform: scale(1.15); }

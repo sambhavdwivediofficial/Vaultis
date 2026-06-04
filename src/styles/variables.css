@@ -1,0 +1,113 @@
+:root {
+  /* ── Fonts ────────────────────────────────────────────────────────────── */
+  --font-display: "Syne", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-mono: "DM Mono", monospace;
+
+  /* ── Base palette ─────────────────────────────────────────────────────── */
+  --color-bg-base:        #08080e;
+  --color-bg-surface:     #0e0e18;
+  --color-bg-elevated:    #13131f;
+  --color-bg-overlay:     #181826;
+  --color-bg-subtle:      #1c1c2e;
+
+  /* ── Glass surfaces ───────────────────────────────────────────────────── */
+  --glass-bg:             rgba(255, 255, 255, 0.028);
+  --glass-bg-hover:       rgba(255, 255, 255, 0.044);
+  --glass-bg-active:      rgba(255, 255, 255, 0.06);
+  --glass-border:         rgba(255, 255, 255, 0.07);
+  --glass-border-strong:  rgba(255, 255, 255, 0.12);
+
+  /* ── Accent — emerald/teal ────────────────────────────────────────────── */
+  --accent-primary:       #00d4a0;
+  --accent-primary-dim:   rgba(0, 212, 160, 0.12);
+  --accent-primary-glow:  rgba(0, 212, 160, 0.25);
+  --accent-secondary:     #0095ff;
+  --accent-secondary-dim: rgba(0, 149, 255, 0.12);
+  --accent-danger:        #ff4466;
+  --accent-danger-dim:    rgba(255, 68, 102, 0.12);
+  --accent-warning:       #ffaa00;
+  --accent-warning-dim:   rgba(255, 170, 0, 0.12);
+  --accent-success:       #00d4a0;
+  --accent-success-dim:   rgba(0, 212, 160, 0.1);
+
+  /* ── Text ─────────────────────────────────────────────────────────────── */
+  --text-primary:   #f0f0fa;
+  --text-secondary: rgba(240, 240, 250, 0.6);
+  --text-tertiary:  rgba(240, 240, 250, 0.35);
+  --text-disabled:  rgba(240, 240, 250, 0.2);
+  --text-accent:    #00d4a0;
+  --text-danger:    #ff4466;
+  --text-warning:   #ffaa00;
+
+  /* ── Borders ──────────────────────────────────────────────────────────── */
+  --border-subtle:  rgba(255, 255, 255, 0.055);
+  --border-default: rgba(255, 255, 255, 0.09);
+  --border-strong:  rgba(255, 255, 255, 0.16);
+  --border-accent:  rgba(0, 212, 160, 0.4);
+
+  /* ── Shadows ──────────────────────────────────────────────────────────── */
+  --shadow-xs:  0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-sm:  0 2px 8px rgba(0, 0, 0, 0.5);
+  --shadow-md:  0 4px 16px rgba(0, 0, 0, 0.6);
+  --shadow-lg:  0 8px 32px rgba(0, 0, 0, 0.7);
+  --shadow-xl:  0 16px 48px rgba(0, 0, 0, 0.8);
+  --shadow-accent: 0 0 24px rgba(0, 212, 160, 0.15);
+  --shadow-accent-strong: 0 0 40px rgba(0, 212, 160, 0.25);
+
+  /* ── Spacing ──────────────────────────────────────────────────────────── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+
+  /* ── Radius ───────────────────────────────────────────────────────────── */
+  --radius-sm:   6px;
+  --radius-md:   10px;
+  --radius-lg:   14px;
+  --radius-xl:   20px;
+  --radius-2xl:  28px;
+  --radius-full: 9999px;
+
+  /* ── Typography scale ─────────────────────────────────────────────────── */
+  --text-xs:   11px;
+  --text-sm:   13px;
+  --text-base: 15px;
+  --text-md:   16px;
+  --text-lg:   18px;
+  --text-xl:   22px;
+  --text-2xl:  28px;
+  --text-3xl:  36px;
+  --text-4xl:  48px;
+
+  /* ── Layout ───────────────────────────────────────────────────────────── */
+  --sidebar-width:        240px;
+  --sidebar-collapsed:    64px;
+  --header-height:        56px;
+  --content-max-width:    1200px;
+
+  /* ── Transitions ──────────────────────────────────────────────────────── */
+  --ease-out:   cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:    cubic-bezier(0.4, 0, 1, 1);
+  --ease-inout: cubic-bezier(0.45, 0, 0.55, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --duration-fast:   120ms;
+  --duration-base:   200ms;
+  --duration-slow:   350ms;
+  --duration-slower: 500ms;
+
+  /* ── Z-index ──────────────────────────────────────────────────────────── */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-overlay: 100;
+  --z-modal:   200;
+  --z-toast:   300;
+  --z-tooltip: 400;
+}

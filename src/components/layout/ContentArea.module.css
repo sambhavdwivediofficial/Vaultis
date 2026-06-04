@@ -1,0 +1,21 @@
+.content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.noPadding {
+  padding: 0;
+}
+
+/* Responsive padding */
+@media (max-width: 1024px) {
+  .content { padding: var(--space-5); }
+}
+@media (max-width: 768px) {
+  .content { padding: var(--space-4); }
+}

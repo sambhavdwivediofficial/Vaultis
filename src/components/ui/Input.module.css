@@ -1,0 +1,91 @@
+.wrapper  { display: flex; flex-direction: column; gap: var(--space-2); width: 100%; }
+
+.label {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+}
+.required { color: var(--accent-danger); margin-left: 3px; }
+
+.inputWrap {
+  display: flex;
+  align-items: center;
+  background: var(--glass-bg);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out);
+  position: relative;
+}
+.inputWrap:focus-within {
+  border-color: var(--accent-primary);
+  background: var(--glass-bg-active);
+  box-shadow: 0 0 0 3px var(--accent-primary-dim);
+  outline: none;
+}
+.hasError {
+  border-color: var(--accent-danger) !important;
+}
+.hasError:focus-within {
+  box-shadow: 0 0 0 3px var(--accent-danger-dim) !important;
+}
+
+/* Sizes */
+.sm .input { height: 32px; font-size: var(--text-sm); }
+.md .input { height: 40px; font-size: var(--text-sm); }
+.lg .input { height: 48px; font-size: var(--text-base); }
+.sm { border-radius: var(--radius-sm); }
+.lg { border-radius: var(--radius-lg); }
+
+.input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  padding: 0 var(--space-4);
+  height: 40px;
+  width: 100%;
+}
+.input::placeholder { color: var(--text-tertiary); }
+
+.prefix, .suffix {
+  display: flex;
+  align-items: center;
+  padding: 0 var(--space-3);
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+.prefix { padding-right: 0; }
+.suffix { padding-left: 0; }
+
+.eyeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 var(--space-3);
+  color: var(--text-tertiary);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  height: 100%;
+  flex-shrink: 0;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+.eyeBtn:hover { color: var(--text-secondary); }
+
+.error {
+  font-size: var(--text-xs);
+  color: var(--accent-danger);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.hint {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
