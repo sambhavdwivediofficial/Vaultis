@@ -21,7 +21,6 @@ export default defineConfig(async () => ({
     },
   },
 
-  // Tauri expects a fixed port, fail if that port is not available
   server: {
     port: 5182,
     strictPort: true,
@@ -34,23 +33,18 @@ export default defineConfig(async () => ({
         }
       : undefined,
     watch: {
-      // Tell vite to use polling for file watch on WSL / network FS
       usePolling: false,
     },
   },
 
-  // Env variables starting with VITE_ are exposed to client
   envPrefix: ["VITE_", "TAURI_ENV_*"],
 
   build: {
-    // Tauri supports ES2021
     target:
       process.env.TAURI_ENV_PLATFORM === "windows"
         ? "chrome105"
         : "safari13",
-    // Don't minify for debug builds
     minify: !process.env.TAURI_ENV_DEBUG ? "esbuild" : false,
-    // Produce sourcemaps for debug builds
     sourcemap: !!process.env.TAURI_ENV_DEBUG,
     rollupOptions: {
       output: {
