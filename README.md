@@ -117,31 +117,31 @@ The security model of Vaultis is built around several non-negotiable principles 
 ```
 
 ```
-                                                    Unlock Flow
-                              ──────────────────────────────────────────────────────────
-              
-                                  App Start ──► Vault Exists? ──No──► Welcome / Setup
-                                                    │
-                                                   Yes
-                                                    │
-                                                    ▼
-                                              Enter Password
-                                                    │
-                                                    ▼
-                                           Argon2id Derivation
-                                                    │
-                                                    ▼
-                                          AES-256-GCM Verify ──Fail──►  Attempt Counter
-                                                    │                   (Max 5, then lock)
-                                                   Pass
-                                                    │
-                                                    ▼
-                                           Key held in memory
-                                             Vault unlocked
-                                                    │
-                                                    ▼
-                                           Auto-lock timer starts
-                                         Ctrl+Shift+L = instant lock
+                                                Unlock Flow
+                          ──────────────────────────────────────────────────────────
+          
+                              App Start ──► Vault Exists? ──No──► Welcome / Setup
+                                                │
+                                               Yes
+                                                │
+                                                ▼
+                                          Enter Password
+                                                │
+                                                ▼
+                                       Argon2id Derivation
+                                                │
+                                                ▼
+                                      AES-256-GCM Verify ──Fail──►  Attempt Counter
+                                                │                   (Max 5, then lock)
+                                               Pass
+                                                │
+                                                ▼
+                                       Key held in memory
+                                         Vault unlocked
+                                                │
+                                                ▼
+                                       Auto-lock timer starts
+                                     Ctrl+Shift+L = instant lock
 ```
 
 ---
