@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./src/images/image.png" >
+  <img src="src/images/image.png" >
 </p>
 
 <h1 align="center">Vaultis</h1>
