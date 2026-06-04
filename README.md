@@ -7,3 +7,15 @@
 <p align="center">
   Enterprise-Grade Security & Secret Management Platform
 </p>
+<p align="center">
+  Developed by <strong>Sambhav Dwivedi</strong>
+</p>
+<p align="center">
+  Built & Maintained by <strong>Sambhav Dwivedi</strong>
+</p>
+<p align="center">
+  Crafted with Precision by <strong>Sambhav Dwivedi</strong>
+</p>
+<p align="center">
+  Created and Engineered by <strong>Sambhav Dwivedi</strong>
+</p>
