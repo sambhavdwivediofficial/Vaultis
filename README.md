@@ -278,7 +278,7 @@ No part of this codebase may be reproduced, distributed, modified, or used in an
 without explicit written permission from the author.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Sambhav%20Dwivedi-0A66C2?style=flat-square)](https://www.linkedin.com/in/sambhavdwivedi/)
-[![Developer](https://img.shields.io/badge/Developer-Sambhav%20Dwivedi-purple?style=flat-square)](https://www.sambhavdwivedi.in)
+[![Developer](https://img.shields.io/badge/Author-Sambhav%20Dwivedi-purple?style=flat-square)](https://www.sambhavdwivedi.in)
 [![GitHub](https://img.shields.io/badge/GitHub-Sambhav%20Dwivedi-181717?style=flat-square)](https://github.com/sambhavdwivediofficial)
   
 *Built & Maintained by ***Sambhav Dwivedi***.*
