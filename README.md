@@ -7,7 +7,7 @@
 
 [![License](https://img.shields.io/badge/License-All%20Rights%20Reserved-DC2626?style=for-the-badge&logo=bookstack&logoColor=white)](https://github.com/sambhavdwivediofficial/Vaultis/blob/main/LICENSE) [![Encryption](https://img.shields.io/badge/Encryption-AES--256--GCM-00d4a0?style=for-the-badge&logo=letsencrypt&logoColor=white)](https://github.com/sambhavdwivediofficial/Vaultis) [![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-0095ff?style=for-the-badge&logo=windows&logoColor=white)](https://github.com/sambhavdwivediofficial/Vaultis) [![Built with Tauri](https://img.shields.io/badge/Tauri-2.0-24C8D8?style=for-the-badge&logo=tauri&logoColor=white)](https://tauri.app) [![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev) [![Rust](https://img.shields.io/badge/Rust-Backend-CE422B?style=for-the-badge&logo=rust&logoColor=white)](https://rust-lang.org) [![SQLite](https://img.shields.io/badge/SQLite-Storage-003B57?style=for-the-badge&logo=sqlite&logoColor=white)](https://sqlite.org) [![Zero Cloud](https://img.shields.io/badge/Cloud-Zero%20Cloud-111827?style=for-the-badge&logo=icloud&logoColor=FF4466)](https://github.com/sambhavdwivediofficial/Vaultis) [![Zero Telemetry](https://img.shields.io/badge/Telemetry-None%20Ever-111827?style=for-the-badge&logo=googleanalytics&logoColor=FF4466)](https://github.com/sambhavdwivediofficial/Vaultis) [![Zero Accounts](https://img.shields.io/badge/Accounts-Not%20Required-111827?style=for-the-badge&logo=auth0&logoColor=FF4466)](https://github.com/sambhavdwivediofficial/Vaultis) [![Offline First](https://img.shields.io/badge/Mode-Fully%20Offline-111827?style=for-the-badge&logo=wifi&logoColor=00d4a0)](https://github.com/sambhavdwivediofficial/Vaultis) [![Key Derivation](https://img.shields.io/badge/KDF-Argon2id-8B5CF6?style=for-the-badge&logo=keycdn&logoColor=white)](https://github.com/sambhavdwivediofficial/Vaultis) [![Memory Safe](https://img.shields.io/badge/Memory-Safe%20%28Rust%29-CE422B?style=for-the-badge&logo=rust&logoColor=white)](https://rust-lang.org) [![Local First](https://img.shields.io/badge/Storage-Local%20Only-00d4a0?style=for-the-badge&logo=harddrivenetwork&logoColor=white)](https://github.com/sambhavdwivediofficial/Vaultis)
 <br />
-[![Developer](https://img.shields.io/badge/Author-Sambhav%20Dwivedi-purple?style=flat-square)](https://www.sambhavdwivedi.in)
+[![Developer](https://img.shields.io/badge/Developer-Sambhav%20Dwivedi-purple?style=flat-square)](https://www.sambhavdwivedi.in)
 
 [Website](https://vaultis.sambhavdwivedi.in) &nbsp;&bull;&nbsp;
 [LinkedIn](https://www.linkedin.com/in/sambhavdwivedi) &nbsp;&bull;&nbsp;
@@ -278,7 +278,7 @@ No part of this codebase may be reproduced, distributed, modified, or used in an
 without explicit written permission from the author.
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Sambhav%20Dwivedi-0A66C2?style=flat-square)](https://www.linkedin.com/in/sambhavdwivedi/)
-[![Developer](https://img.shields.io/badge/Author-Sambhav%20Dwivedi-purple?style=flat-square)](https://www.sambhavdwivedi.in)
+[![Developer](https://img.shields.io/badge/Developer-Sambhav%20Dwivedi-purple?style=flat-square)](https://www.sambhavdwivedi.in)
 [![GitHub](https://img.shields.io/badge/GitHub-Sambhav%20Dwivedi-181717?style=flat-square)](https://github.com/sambhavdwivediofficial)
   
 *Built & Maintained by ***Sambhav Dwivedi***.*
