@@ -126,8 +126,8 @@ pub fn export_vault(
     let (note_count, password_count, vault_id) = state
         .key_manager
         .with_key(|key| {
-            let notes = NoteService::list_notes(pool, key)?;
-            let passwords = PasswordService::list_passwords(pool, key)?;
+            let notes = NoteService::list_notes(&pool, key)?;
+            let passwords = PasswordService::list_passwords(&pool, key)?;
             let info = crate::services::vault_service::VaultService::get_vault_info(&data_dir)?;
             Ok((notes.len(), passwords.len(), info.vault_id))
         })

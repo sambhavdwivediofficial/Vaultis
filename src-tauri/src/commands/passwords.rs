@@ -31,7 +31,7 @@ pub fn create_password(
         .key_manager
         .with_key(|key| {
             PasswordService::create_password(
-                pool,
+                &pool,
                 key,
                 CreatePasswordRequest {
                     name,
@@ -59,7 +59,7 @@ pub fn get_password(state: State<AppState>, id: String) -> Result<PasswordPlaint
     let pool = state.pool().map_err(|e| e.to_string())?;
     state
         .key_manager
-        .with_key(|key| PasswordService::get_password(pool, key, &id))
+        .with_key(|key| PasswordService::get_password(&pool, key, &id))
         .map_err(|e| e.to_string())
 }
 
@@ -72,7 +72,7 @@ pub fn list_passwords(state: State<AppState>) -> Result<Vec<PasswordPlaintext>, 
     let pool = state.pool().map_err(|e| e.to_string())?;
     state
         .key_manager
-        .with_key(|key| PasswordService::list_passwords(pool, key))
+        .with_key(|key| PasswordService::list_passwords(&pool, key))
         .map_err(|e| e.to_string())
 }
 
@@ -85,7 +85,7 @@ pub fn list_trashed_passwords(state: State<AppState>) -> Result<Vec<PasswordPlai
     let pool = state.pool().map_err(|e| e.to_string())?;
     state
         .key_manager
-        .with_key(|key| PasswordService::list_trashed_passwords(pool, key))
+        .with_key(|key| PasswordService::list_trashed_passwords(&pool, key))
         .map_err(|e| e.to_string())
 }
 
@@ -112,7 +112,7 @@ pub fn update_password(
         .key_manager
         .with_key(|key| {
             PasswordService::update_password(
-                pool,
+                &pool,
                 key,
                 UpdatePasswordRequest {
                     id,
@@ -138,7 +138,7 @@ pub fn delete_password(state: State<AppState>, id: String) -> Result<(), String>
     refresh_autolock(&state);
 
     let pool = state.pool().map_err(|e| e.to_string())?;
-    PasswordService::delete_password(pool, &id).map_err(|e| e.to_string())
+    PasswordService::delete_password(&pool, &id).map_err(|e| e.to_string())
 }
 
 /// Restore a password from trash.
@@ -148,7 +148,7 @@ pub fn restore_password(state: State<AppState>, id: String) -> Result<(), String
     refresh_autolock(&state);
 
     let pool = state.pool().map_err(|e| e.to_string())?;
-    PasswordService::restore_password(pool, &id).map_err(|e| e.to_string())
+    PasswordService::restore_password(&pool, &id).map_err(|e| e.to_string())
 }
 
 /// Search password entries.
@@ -163,7 +163,7 @@ pub fn search_passwords(
     let pool = state.pool().map_err(|e| e.to_string())?;
     state
         .key_manager
-        .with_key(|key| PasswordService::search_passwords(pool, key, &query))
+        .with_key(|key| PasswordService::search_passwords(&pool, key, &query))
         .map_err(|e| e.to_string())
 }
 

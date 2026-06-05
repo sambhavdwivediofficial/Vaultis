@@ -25,7 +25,7 @@ pub fn upload_file(
     state
         .key_manager
         .with_key(|key| {
-            FileService::upload_file(pool, key, &data_dir, UploadFileRequest {
+            FileService::upload_file(&pool, key, &data_dir, UploadFileRequest {
                 source_path,
                 tags,
                 folder_id,
@@ -43,7 +43,7 @@ pub fn get_file_metadata(state: State<AppState>, id: String) -> Result<FilePlain
     let pool = state.pool().map_err(|e| e.to_string())?;
     state
         .key_manager
-        .with_key(|key| FileService::get_file_metadata(pool, key, &id))
+        .with_key(|key| FileService::get_file_metadata(&pool, key, &id))
         .map_err(|e| e.to_string())
 }
 
@@ -56,7 +56,7 @@ pub fn list_files(state: State<AppState>) -> Result<Vec<FilePlaintext>, String> 
     let pool = state.pool().map_err(|e| e.to_string())?;
     state
         .key_manager
-        .with_key(|key| FileService::list_files(pool, key))
+        .with_key(|key| FileService::list_files(&pool, key))
         .map_err(|e| e.to_string())
 }
 
@@ -69,7 +69,7 @@ pub fn list_trashed_files(state: State<AppState>) -> Result<Vec<FilePlaintext>, 
     let pool = state.pool().map_err(|e| e.to_string())?;
     state
         .key_manager
-        .with_key(|key| FileService::list_trashed_files(pool, key))
+        .with_key(|key| FileService::list_trashed_files(&pool, key))
         .map_err(|e| e.to_string())
 }
 
@@ -80,7 +80,7 @@ pub fn delete_file(state: State<AppState>, id: String) -> Result<(), String> {
     refresh_autolock(&state);
 
     let pool = state.pool().map_err(|e| e.to_string())?;
-    FileService::delete_file(pool, &id).map_err(|e| e.to_string())
+    FileService::delete_file(&pool, &id).map_err(|e| e.to_string())
 }
 
 /// Restore a file from trash.
@@ -90,7 +90,7 @@ pub fn restore_file(state: State<AppState>, id: String) -> Result<(), String> {
     refresh_autolock(&state);
 
     let pool = state.pool().map_err(|e| e.to_string())?;
-    FileService::restore_file(pool, &id).map_err(|e| e.to_string())
+    FileService::restore_file(&pool, &id).map_err(|e| e.to_string())
 }
 
 /// Decrypt a file and export it to a user-chosen directory.
@@ -110,7 +110,7 @@ pub fn export_file(
 
     let result = state
         .key_manager
-        .with_key(|key| FileService::export_file(pool, key, &data_dir, &id, &export_path))
+        .with_key(|key| FileService::export_file(&pool, key, &data_dir, &id, &export_path))
         .map_err(|e| e.to_string())?;
 
     Ok(result.to_string_lossy().into_owned())
@@ -125,7 +125,7 @@ pub fn search_files(state: State<AppState>, query: String) -> Result<Vec<FilePla
     let pool = state.pool().map_err(|e| e.to_string())?;
     state
         .key_manager
-        .with_key(|key| FileService::search_files(pool, key, &query))
+        .with_key(|key| FileService::search_files(&pool, key, &query))
         .map_err(|e| e.to_string())
 }
 

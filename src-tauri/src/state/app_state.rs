@@ -49,10 +49,11 @@ impl AppState {
     }
 
     /// Borrow the connection pool, returning an error if not initialized.
-    pub fn pool(&self) -> VaultisResult<&DbPool> {
-        let guard = self.db_pool.read();
-        // parking_lot::RwLockReadGuard has map_ref for Option
-        RwLockReadGuard::map(guard, |opt| opt.as_ref())
+    pub fn pool(&self) -> VaultisResult<DbPool> {
+        self.db_pool
+            .read()
+            .as_ref()
+            .cloned()
             .ok_or(VaultisError::VaultLocked)
     }
 

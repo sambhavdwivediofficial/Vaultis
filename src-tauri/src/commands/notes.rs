@@ -24,7 +24,7 @@ pub fn create_note(
         .key_manager
         .with_key(|key| {
             NoteService::create_note(
-                pool,
+                &pool,
                 key,
                 CreateNoteRequest { title, content, tags, folder_id, color },
             )
@@ -41,7 +41,7 @@ pub fn get_note(state: State<AppState>, id: String) -> Result<NotePlaintext, Str
     let pool = state.pool().map_err(|e| e.to_string())?;
     state
         .key_manager
-        .with_key(|key| NoteService::get_note(pool, key, &id))
+        .with_key(|key| NoteService::get_note(&pool, key, &id))
         .map_err(|e| e.to_string())
 }
 
@@ -54,7 +54,7 @@ pub fn list_notes(state: State<AppState>) -> Result<Vec<NotePlaintext>, String> 
     let pool = state.pool().map_err(|e| e.to_string())?;
     state
         .key_manager
-        .with_key(|key| NoteService::list_notes(pool, key))
+        .with_key(|key| NoteService::list_notes(&pool, key))
         .map_err(|e| e.to_string())
 }
 
@@ -67,7 +67,7 @@ pub fn list_trashed_notes(state: State<AppState>) -> Result<Vec<NotePlaintext>, 
     let pool = state.pool().map_err(|e| e.to_string())?;
     state
         .key_manager
-        .with_key(|key| NoteService::list_trashed_notes(pool, key))
+        .with_key(|key| NoteService::list_trashed_notes(&pool, key))
         .map_err(|e| e.to_string())
 }
 
@@ -91,7 +91,7 @@ pub fn update_note(
         .key_manager
         .with_key(|key| {
             NoteService::update_note(
-                pool,
+                &pool,
                 key,
                 UpdateNoteRequest { id, title, content, tags, folder_id, color, is_pinned },
             )
@@ -106,7 +106,7 @@ pub fn delete_note(state: State<AppState>, id: String) -> Result<(), String> {
     refresh_autolock(&state);
 
     let pool = state.pool().map_err(|e| e.to_string())?;
-    NoteService::delete_note(pool, &id).map_err(|e| e.to_string())
+    NoteService::delete_note(&pool, &id).map_err(|e| e.to_string())
 }
 
 /// Restore a note from trash.
@@ -116,7 +116,7 @@ pub fn restore_note(state: State<AppState>, id: String) -> Result<(), String> {
     refresh_autolock(&state);
 
     let pool = state.pool().map_err(|e| e.to_string())?;
-    NoteService::restore_note(pool, &id).map_err(|e| e.to_string())
+    NoteService::restore_note(&pool, &id).map_err(|e| e.to_string())
 }
 
 /// Full-text search across decrypted notes.
@@ -128,7 +128,7 @@ pub fn search_notes(state: State<AppState>, query: String) -> Result<Vec<NotePla
     let pool = state.pool().map_err(|e| e.to_string())?;
     state
         .key_manager
-        .with_key(|key| NoteService::search_notes(pool, key, &query))
+        .with_key(|key| NoteService::search_notes(&pool, key, &query))
         .map_err(|e| e.to_string())
 }
 
