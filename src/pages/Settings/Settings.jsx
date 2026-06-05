@@ -12,6 +12,7 @@ import Dialog, { DialogFooter } from "../../components/ui/Dialog.jsx";
 import { useToast } from "../../hooks/useToast.js";
 import useSettingsStore from "../../store/settingsStore.js";
 import useAuthStore from "../../store/authStore.js";
+import { tauriVault } from "../../services/tauriBridge.js";
 import { AUTO_LOCK_OPTIONS } from "../../utils/constants.js";
 import { isSmallScreen } from "../../utils/helpers.js";
 import styles from "./Settings.module.css";
@@ -49,6 +50,10 @@ export default function SettingsPage() {
 
   const [showResetDialog, setShowResetDialog] = useState(false);
   const [resetting, setResetting] = useState(false);
+
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [deleteConfirmText, setDeleteConfirmText] = useState("");
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     fetch_();
@@ -91,6 +96,35 @@ export default function SettingsPage() {
       fetch_();
     } else {
       showError("Reset failed");
+    }
+  };
+
+  const handleDeleteVaultis = async () => {
+    if (deleteConfirmText !== "DELETE VAULTIS") {
+      showError('Type "DELETE VAULTIS" to confirm');
+      return;
+    }
+
+    setDeleting(true);
+    try {
+      const result = await tauriVault.deleteVaultPermanently();
+      
+      if (result.ok) {
+        success("Vault deleted permanently");
+        setShowDeleteDialog(false);
+        
+        // Wait a moment for the toast to show, then navigate
+        setTimeout(() => {
+          navigate("/", { replace: true });
+          window.location.reload();
+        }, 1500);
+      } else {
+        showError(result.error || "Failed to delete vault");
+      }
+    } catch (e) {
+      showError(e.message || "Deletion failed");
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -273,6 +307,22 @@ export default function SettingsPage() {
                   Reset
                 </Button>
               </div>
+
+              <div className={styles.divider} />
+
+              <div className={styles.settingRow}>
+                <div className={styles.settingLabel}>
+                  <p className={styles.label} style={{ color: "var(--accent-danger)" }}>Delete Vaultis</p>
+                  <p className={styles.hint} style={{ color: "var(--accent-danger)" }}>Permanently delete your vault and all data</p>
+                </div>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  onClick={() => setShowDeleteDialog(true)}
+                >
+                  Delete
+                </Button>
+              </div>
             </Card>
           </div>
         </ContentArea>
@@ -327,7 +377,7 @@ export default function SettingsPage() {
         </DialogFooter>
       </Dialog>
 
-      {/* Reset Dialog */}
+      {/* Reset Settings Dialog */}
       <Dialog
         open={showResetDialog}
         onClose={() => setShowResetDialog(false)}
@@ -346,6 +396,56 @@ export default function SettingsPage() {
           </Button>
         </div>
       </Dialog>
+
+      {/* Delete Vaultis Dialog */}
+      <Dialog
+        open={showDeleteDialog}
+        onClose={() => setShowDeleteDialog(false)}
+        title="Delete Vaultis?"
+        size="sm"
+      >
+        <div className={styles.deleteWarning}>
+          <div className={styles.deleteWarningIcon}>
+            <WarningIcon />
+          </div>
+          <p className={styles.deleteWarningTitle}>
+            This action is permanent and irreversible
+          </p>
+          <p className={styles.deleteWarningText}>
+            Your vault, all passwords, notes, files, and settings will be permanently deleted. 
+            There is no way to recover your data after this.
+          </p>
+          <p className={styles.deleteWarningText}>
+            To confirm deletion, type <strong>DELETE VAULTIS</strong>
+          </p>
+        </div>
+
+        <Input
+          value={deleteConfirmText}
+          onChange={e => setDeleteConfirmText(e.target.value.toUpperCase())}
+          placeholder="Type DELETE VAULTIS"
+          autoFocus
+        />
+
+        <DialogFooter style={{ marginTop: "var(--space-4)" }}>
+          <Button variant="ghost" size="sm" onClick={() => {
+            setShowDeleteDialog(false);
+            setDeleteConfirmText("");
+          }} fullWidth style={{ marginTop: "var(--space-4)" }}>
+            Cancel
+          </Button>
+          <Button
+            variant="danger"
+            size="sm"
+            onClick={handleDeleteVaultis}
+            loading={deleting}
+            disabled={deleteConfirmText !== "DELETE VAULTIS"}
+            fullWidth style={{ marginTop: "var(--space-4)" }}
+          >
+            Delete Permanently
+          </Button>
+        </DialogFooter>
+      </Dialog>
     </div>
   );
 }
@@ -355,3 +455,4 @@ function CopyIcon() { return <svg width="16" height="16" viewBox="0 0 24 24" fil
 function PaletteIcon() { return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><circle cx="13" cy="13" r="8"/><path d="M5.64 5.64a8 8 0 0 1 10.72 10.72"/><circle cx="6" cy="20" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="12" cy="4" r="1"/></svg>; }
 function EyeIcon() { return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>; }
 function AlertIcon() { return <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>; }
+function WarningIcon() { return <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>; }

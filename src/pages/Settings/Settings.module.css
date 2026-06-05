@@ -105,6 +105,51 @@
   padding-bottom: var(--space-4);
 }
 
+.divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin: var(--space-2) 0;
+}
+
+.deleteWarning {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--accent-danger-dim);
+  border: 1px solid var(--accent-danger);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-5);
+}
+
+.deleteWarningIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background: var(--accent-danger);
+  color: white;
+}
+
+.deleteWarningTitle {
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--accent-danger);
+}
+
+.deleteWarningText {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.deleteWarningText strong {
+  color: var(--accent-danger);
+  font-weight: 600;
+}
+
 @media (max-width: 768px) {
   .container { gap: var(--space-3); }
   .settingRow { flex-direction: column; align-items: flex-start; }

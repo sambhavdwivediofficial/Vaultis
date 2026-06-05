@@ -1,3 +1,4 @@
+// tauriBridge.js this file provides a clean interface for the frontend to interact with the Tauri backend.
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
 
@@ -12,6 +13,17 @@ export const tauriVault = {
   getInfo:        ()                         => invoke("get_vault_info"),
   changePassword: (currentPassword, newPassword) =>
     invoke("change_master_password", { currentPassword, newPassword }),
+  deleteVaultPermanently: async () => {
+    try {
+      const result = await invoke("delete_vault_permanently");
+      return { ok: true, ...result };
+    } catch (err) {
+      return {
+        ok: false,
+        error: err instanceof Error ? err.message : String(err),
+      };
+    }
+  },
 };
 
 // ── Notes ─────────────────────────────────────────────────────────────────
@@ -21,7 +33,6 @@ export const tauriNotes = {
     invoke("create_note", { title, content, tags, folderId, color }),
   get:     (id)       => invoke("get_note",     { id }),
   list:    ()         => invoke("list_notes"),
-  listTrashed: ()     => invoke("list_trashed_notes"),
   update:  (id, title, content, tags, folderId, color, isPinned) =>
     invoke("update_note", { id, title, content, tags, folderId, color, isPinned }),
   delete:  (id)       => invoke("delete_note",  { id }),
@@ -36,7 +47,6 @@ export const tauriPasswords = {
     invoke("create_password", { name, username, password, url, notes, totpSecret, tags, folderId, isFavorite }),
   get:      (id)     => invoke("get_password",      { id }),
   list:     ()       => invoke("list_passwords"),
-  listTrashed: ()    => invoke("list_trashed_passwords"),
   update:   (id, name, username, password, url, notes, totpSecret, tags, folderId, isFavorite) =>
     invoke("update_password", { id, name, username, password, url, notes, totpSecret, tags, folderId, isFavorite }),
   delete:   (id)     => invoke("delete_password",   { id }),
@@ -53,7 +63,6 @@ export const tauriFiles = {
     invoke("upload_file",       { sourcePath, tags, folderId }),
   getMeta:     (id)            => invoke("get_file_metadata", { id }),
   list:        ()              => invoke("list_files"),
-  listTrashed: ()              => invoke("list_trashed_files"),
   delete:      (id)            => invoke("delete_file",       { id }),
   restore:     (id)            => invoke("restore_file",      { id }),
   export:      (id, exportDir) => invoke("export_file",       { id, exportDir }),
@@ -71,13 +80,8 @@ export const tauriSettings = {
 // ── Backup ────────────────────────────────────────────────────────────────
 
 export const tauriBackup = {
-  create: (options) => invoke("create_backup", options),
-  restore: (backupPath, options) => invoke("restore_backup", { 
-    backupPath, 
-    password: options?.password,
-    includeMetadata: options?.includeMetadata 
-  }),
-  
+  create:  ()           => invoke("create_backup"),
+  restore: (backupPath) => invoke("restore_backup", { backupPath }),
   list:    ()           => invoke("list_backups"),
   delete:  (backupPath) => invoke("delete_backup",  { backupPath }),
   export:  (destDir)    => invoke("export_vault",   { destDir }),

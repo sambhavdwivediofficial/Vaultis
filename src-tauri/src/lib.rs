@@ -1,3 +1,4 @@
+// src-tauri/src/lib.rs main entry point for the Tauri backend, setting up commands, state management, and plugins.
 pub mod backup;
 pub mod commands;
 pub mod crypto;
@@ -101,6 +102,7 @@ pub fn run() {
             lock_vault,
             change_master_password,
             get_vault_info,
+            delete_vault_permanently,
             vault_is_unlocked,
             // Notes
             create_note,

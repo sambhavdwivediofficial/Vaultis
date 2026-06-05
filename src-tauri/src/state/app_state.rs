@@ -1,6 +1,6 @@
+// src-tauri/src/state/app_state.rs central application state management for Vaultis, including vault status, key management, DB connection pool, and security features like auto-lock and failed attempt tracking.
 use std::{path::PathBuf, sync::Arc, time::Instant};
 use parking_lot::RwLock;
-use once_cell::sync::OnceCell;
 
 use crate::{
     crypto::key_manager::KeyManager,
@@ -15,7 +15,7 @@ pub struct AppState {
     /// In-memory key manager holding the unlocked vault key (or None if locked).
     pub key_manager: Arc<KeyManager>,
     /// SQLite connection pool (initialized on first unlock or vault creation).
-    pub db_pool: OnceCell<DbPool>,
+    pub db_pool: RwLock<Option<DbPool>>,
     /// Number of consecutive failed unlock attempts.
     pub failed_attempts: RwLock<u32>,
     /// Timestamp of last failed attempt (for throttling).
@@ -31,7 +31,7 @@ impl AppState {
         Self {
             data_dir: RwLock::new(PathBuf::new()),
             key_manager: Arc::new(KeyManager::new()),
-            db_pool: OnceCell::new(),
+            db_pool: RwLock::new(None),
             failed_attempts: RwLock::new(0),
             last_failed_at: RwLock::new(None),
             read_only: RwLock::new(false),
@@ -42,18 +42,24 @@ impl AppState {
     /// Initialize the DB pool. Safe to call multiple times — only runs once.
     pub fn init_pool(&self) -> VaultisResult<()> {
         let data_dir = self.data_dir.read().clone();
-        self.db_pool.get_or_try_init(|| {
-            let db_path = crate::utils::paths::get_database_path(&data_dir);
-            create_pool(&db_path)
-        })?;
+        let db_path = crate::utils::paths::get_database_path(&data_dir);
+        let pool = create_pool(&db_path)?;
+        *self.db_pool.write() = Some(pool);
         Ok(())
     }
 
     /// Borrow the connection pool, returning an error if not initialized.
     pub fn pool(&self) -> VaultisResult<&DbPool> {
-        self.db_pool
-            .get()
+        let guard = self.db_pool.read();
+        // parking_lot::RwLockReadGuard has map_ref for Option
+        RwLockReadGuard::map(guard, |opt| opt.as_ref())
             .ok_or(VaultisError::VaultLocked)
+    }
+
+    /// Close the DB pool to release file locks (used before vault deletion).
+    pub fn close_pool(&self) {
+        *self.db_pool.write() = None;
+        tracing::info!("Database pool closed");
     }
 
     /// Returns `true` if the vault is currently unlocked.

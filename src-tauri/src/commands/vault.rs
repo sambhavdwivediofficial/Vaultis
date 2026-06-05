@@ -1,12 +1,13 @@
+// src-tauri/src/commands/vault.rs tauri commands related to vault management: creation, unlocking, locking, password changes, and deletion.
 use tauri::State;
-// use zeroize::Zeroizing;
+use std::fs;
+use std::path::PathBuf;
 
 use crate::{
     models::vault::VaultInfo,
     services::vault_service::VaultService,
     state::app_state::AppState,
     vault::lock_manager::spawn_auto_lock_monitor,
-    // utils::errors::VaultisResult,
 };
 
 /// Check whether a vault has been created on this machine.
@@ -162,4 +163,63 @@ pub fn vault_is_unlocked(state: State<AppState>) -> bool {
         return false;
     }
     state.is_unlocked()
+}
+
+#[tauri::command]
+pub async fn delete_vault_permanently(
+    state: State<'_, AppState>,
+) -> Result<serde_json::Value, String> {
+    
+    let data_dir = state.data_dir.read().clone();
+    
+    if data_dir.to_string_lossy().is_empty() {
+        return Err("No vault path set".to_string());
+    }
+ 
+    // Lock the vault and clear in-memory keys
+    state.emergency_lock();
+ 
+    // Close DB pool to release file locks (critical for Windows)
+    state.close_pool();
+ 
+    // Give Windows time to release file handles
+    tokio::time::sleep(std::time::Duration::from_millis(300)).await;
+ 
+    // Get vault database file path
+    let vault_db_path = data_dir.join("vault.db");
+    
+    // Securely wipe and delete vault database file
+    if vault_db_path.exists() {
+        if let Ok(file_size) = fs::metadata(&vault_db_path).map(|m| m.len()) {
+            if let Ok(mut file) = fs::OpenOptions::new().write(true).open(&vault_db_path) {
+                use std::io::Write;
+                let zeros = vec![0u8; 4096];
+                for _ in 0..(file_size as usize / 4096 + 1) {
+                    let _ = file.write_all(&zeros);
+                }
+            }
+        }
+        
+        if let Err(e) = fs::remove_file(&vault_db_path) {
+            return Err(format!("Failed to delete vault file: {}", e));
+        }
+    }
+ 
+    // Delete entire vault data directory
+    if data_dir.exists() {
+        if let Err(e) = fs::remove_dir_all(&data_dir) {
+            return Err(format!("Failed to delete vault directory: {}", e));
+        }
+    }
+ 
+    // Clear data_dir from state
+    {
+        let mut data_dir_lock = state.data_dir.write();
+        *data_dir_lock = PathBuf::new();
+    }
+ 
+    Ok(serde_json::json!({
+        "ok": true,
+        "message": "Vault deleted permanently."
+    }))
 }

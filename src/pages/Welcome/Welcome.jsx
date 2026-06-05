@@ -59,7 +59,7 @@ export default function WelcomePage() {
         {/* Footer */}
         <div className={styles.footer}>
           <p className={styles.footerText}>
-            Built by <a href="https://www.sambhavdwivedi.in" target="_blank" rel="noopener noreferrer">Sambhav Dwivedi</a>
+            Built & Maintained by <a href="https://www.sambhavdwivedi.in" target="_blank" rel="noopener noreferrer">Sambhav Dwivedi</a>
           </p>
           <p className={styles.version}>v0.1.0</p>
         </div>
